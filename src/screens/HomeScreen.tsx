@@ -3,6 +3,7 @@ import { StackScreenProps } from '@react-navigation/stack';
 import React, { useEffect } from 'react'
 import { Button, Text, View } from 'react-native'
 import movieDB from '../api/movieDB';
+import { MovieDBNowPlaying } from '../interfaces/movieINterface';
 
 
 interface Props extends StackScreenProps<any,any> {}
@@ -11,9 +12,9 @@ export const HomeScreen = ({ navigation}:Props) => {
 
 
   useEffect(() => {
-    movieDB.get('/now_playing')
+    movieDB.get<MovieDBNowPlaying>('/now_playing')
       .then( resp => {
-        console.log(resp.data )
+        console.log(resp.data.results[0].title )
       }).catch( error => {
         console.log(error)
       })
