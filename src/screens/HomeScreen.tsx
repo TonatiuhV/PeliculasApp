@@ -1,26 +1,22 @@
 import { useNavigation } from '@react-navigation/native'
 import { StackScreenProps } from '@react-navigation/stack';
-import React, { useEffect } from 'react'
-import { Button, Text, View } from 'react-native'
-import movieDB from '../api/movieDB';
-import { MovieDBNowPlaying } from '../interfaces/movieINterface';
+import React from 'react'
+import { ActivityIndicator, Button, Text, View } from 'react-native'
+import { useMovies } from '../hooks/useMovies';
 
 
 interface Props extends StackScreenProps<any,any> {}
 
 export const HomeScreen = ({ navigation}:Props) => {
 
-
-  useEffect(() => {
-    movieDB.get<MovieDBNowPlaying>('/now_playing')
-      .then( resp => {
-        console.log(resp.data.results[0].title )
-      }).catch( error => {
-        console.log(error)
-      })
-  
-  }, [])
-  
+  const {peliculasEnCine, isLoading} = useMovies();
+  if(isLoading) {
+    return (
+      <View style={{flex:1, justifyContent:'center', alignContent: 'center'}}>
+        <ActivityIndicator color="red" size={100}/>
+      </View>
+    )
+  }
   
   return (
     <View>
