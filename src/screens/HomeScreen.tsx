@@ -1,6 +1,6 @@
 import React, { useRef } from 'react'
 import { StackScreenProps } from '@react-navigation/stack';
-import { ActivityIndicator, Button, Dimensions, FlatList, ScrollView, Text, View } from 'react-native'
+import { ActivityIndicator, Dimensions, ScrollView, View } from 'react-native'
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 
@@ -8,6 +8,7 @@ import Carousel from 'react-native-snap-carousel-v4';
 
 import { MoviePoster } from '../components/MoviePoster';
 import { useMovies } from '../hooks/useMovies';
+import { HorizontalSlider } from '../components/HorizontalSlider';
 
 
 interface Props extends StackScreenProps<any,any> {}
@@ -17,7 +18,7 @@ const  {width:windowWidth} = Dimensions.get('window');
 
 export const HomeScreen = ({ navigation}:Props) => {
 
-  const {peliculasEnCine, isLoading} = useMovies();
+  const {nowPlaying, popular, topRated, upcoming, isLoading} = useMovies();
   const {top}= useSafeAreaInsets();
   const carousel = useRef(null)
 
@@ -37,7 +38,7 @@ export const HomeScreen = ({ navigation}:Props) => {
         {/* Carusel Principal */}
         <View style={{height:440}}>
           <Carousel
-                  data={peliculasEnCine}
+                  data={nowPlaying}
                   renderItem={({item}) => <MoviePoster  movie={item}/>}
                   sliderWidth={windowWidth}
                   itemWidth={300}
@@ -45,27 +46,18 @@ export const HomeScreen = ({ navigation}:Props) => {
                     justifyContent:'center'
                   }}
                   vertical={false}
+                  inactiveSlideOpacity={0.9}
                   />
         </View>
 
         {/* Peliculas Poplares */}
-        <View style={{backgroundColor:'red', height: 260}}>
-          <Text style={{fontSize: 30, fontWeight:'bold'}}>En cine</Text>
-          <FlatList
-            data={peliculasEnCine}
-            renderItem = {({item}) => (
-            <MoviePoster movie={item}
-              width={140}
-              height={200}
-              />
-            
-            )}
-            keyExtractor={(item, index) => item.id.toString()}
-            horizontal={true}
-            showsHorizontalScrollIndicator={false}
-          />
+        <HorizontalSlider title='Populares' movies={popular}/>
+        <HorizontalSlider title='Top Rated' movies={topRated}/>
+        <HorizontalSlider title='Upcoming' movies={upcoming}/>
+        {/* <HorizontalSlider
 
-        </View>
+          movies={peliculasEnCine}
+        /> */}
       </View>
     </ScrollView>
   )
