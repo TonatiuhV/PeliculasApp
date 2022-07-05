@@ -1,6 +1,6 @@
 import React, { useRef } from 'react'
 import { StackScreenProps } from '@react-navigation/stack';
-import { ActivityIndicator, Dimensions, ScrollView, View } from 'react-native'
+import { ActivityIndicator, Dimensions, ScrollView, StatusBar, View } from 'react-native'
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 
@@ -34,6 +34,12 @@ export const HomeScreen = ({ navigation}:Props) => {
   
   return (
     <ScrollView>
+      <StatusBar
+            animated={true}
+            translucent
+            backgroundColor='transparent'
+            barStyle='dark-content'
+          />
       <View style={{marginTop:top+20}}>
         {/* Carusel Principal */}
         <View style={{height:440}}>
