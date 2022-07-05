@@ -3,6 +3,7 @@ import React from 'react'
 import { Dimensions, Image,ScrollView, StatusBar, StyleSheet, Text, View } from 'react-native'
 
 import Icon from 'react-native-vector-icons/Ionicons'
+import { useMovieDetails } from '../hooks/useMovieDetails'
 
 import { RootStackParams } from '../navigation/Navigation'
 
@@ -17,9 +18,9 @@ export const DetailsScreen = ({route}:Props) => {
   const movie = route.params
   const uri =`https://image.tmdb.org/t/p/w500${movie.poster_path}`
 
+  const {isLoading, cast, movieFull} = useMovieDetails(movie.id)
+
   return (
-    
-    
     <ScrollView>
           <StatusBar
             animated={true}
@@ -45,7 +46,7 @@ export const DetailsScreen = ({route}:Props) => {
               size={30}
             />
           </View>
-        </ScrollView>
+    </ScrollView>
   )
 }
 const styles = StyleSheet.create({
