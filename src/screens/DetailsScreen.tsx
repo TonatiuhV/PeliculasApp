@@ -1,6 +1,7 @@
 import { StackScreenProps } from '@react-navigation/stack'
 import React from 'react'
 import { ActivityIndicator, Dimensions, Image,ScrollView, StatusBar, StyleSheet, Text, View } from 'react-native'
+import { TouchableOpacity } from 'react-native-gesture-handler'
 
 import Icon from 'react-native-vector-icons/Ionicons'
 import { MovieDetails } from '../components/MovieDetails'
@@ -10,11 +11,10 @@ import { RootStackParams } from '../navigation/Navigation'
 
 
 
-
 const screenHeight = Dimensions.get('screen').height;
 interface Props extends StackScreenProps<RootStackParams,'DetailsScreen'>{}
 
-export const DetailsScreen = ({route}:Props) => {
+export const DetailsScreen = ({route,navigation}:Props) => {
   
   const movie = route.params
   const uri =`https://image.tmdb.org/t/p/w500${movie.poster_path}`
@@ -35,6 +35,9 @@ export const DetailsScreen = ({route}:Props) => {
                 source={{uri}}
                 style={styles.posterImage}
               />
+                        {/* Boton  para cerra */}
+            
+  
           </View>
           <View style={styles.marginContainer}>
             <Text style={styles.subTitle}>{movie.original_title}</Text>
@@ -50,8 +53,20 @@ export const DetailsScreen = ({route}:Props) => {
             :
             (<MovieDetails movieFull={movieFull!} cast={cast}/>)
             }
-            
-
+            <View
+              style={styles.backBoton}
+            >
+              <TouchableOpacity
+              activeOpacity={0.8}
+              onPress={() => navigation.pop()}
+              >
+                <Icon
+                  color="gray"
+                  name='arrow-back-outline'
+                  size={30}
+                />
+              </TouchableOpacity>
+            </View>
     </ScrollView>
   )
 }
@@ -79,5 +94,17 @@ const styles = StyleSheet.create({
   title: {
     fontSize:20,
     fontWeight:'bold'
+  },
+  backBoton:{
+    position:'absolute',
+    top:45,
+    left:10,
+    justifyContent:'center',
+    alignItems:'center',
+    backgroundColor:'white',
+    width:40,
+    height:40,
+    borderRadius:25,
+    elevation:9,
   }
 })
