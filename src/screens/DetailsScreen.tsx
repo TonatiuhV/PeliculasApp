@@ -51,6 +51,7 @@ export const DetailsScreen = ({route}:Props) => {
             (<MovieDetails movieFull={movieFull!} cast={cast}/>)
             }
             
+
     </ScrollView>
   )
 }

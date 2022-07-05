@@ -7,6 +7,8 @@ import currencyFormatter from 'currency-formatter'
 
 import { Cast } from '../interfaces/cretisInterface';
 import { MovieFull } from '../interfaces/movieInterface'
+import { CastItem } from './CastItem';
+import { FlatList } from 'react-native-gesture-handler';
 
 
 
@@ -40,13 +42,33 @@ export const MovieDetails = ({movieFull, cast}: Props) => {
             </Text>
             {/* Presupuesto */}
             <Text style={{fontSize:23, marginTop:10, fontWeight:'bold'}}>
-          
                 Presupuesto
             </Text>
             <Text style={{fontSize:18}}>
                 {currencyFormatter.format(movieFull.budget, {code:'USD'})}
             </Text>
         </View>
+
+        {/* Casts */}
+        <View style={{
+            marginTop:10,
+            marginBottom:100,
+        }}>
+            <Text style={{fontSize:23, marginTop:10, fontWeight:'bold', marginHorizontal:20}}>
+                Actores
+            </Text>
+            <FlatList
+                data={cast}
+                keyExtractor = {(item) => item.id.toString()}
+                renderItem = {({item}) => <CastItem actor={item}/>}
+                horizontal
+                showsHorizontalScrollIndicator={false}
+                style={{
+                    marginTop:20,
+                }}
+            />
+        </View>
+
     </>
   )
 }
