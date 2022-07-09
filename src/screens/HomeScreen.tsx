@@ -1,4 +1,4 @@
-import React, { useContext, useRef } from 'react'
+import React, { useContext, useEffect, useRef } from 'react'
 import { StackScreenProps } from '@react-navigation/stack';
 import { ActivityIndicator, Dimensions, ScrollView, StatusBar, View } from 'react-native'
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
@@ -34,6 +34,13 @@ export const HomeScreen = ({ navigation}:Props) => {
     setMainColors({primary,secoundary})
   }
 
+  useEffect(() => {
+    if(nowPlaying.length > 0) {
+      getPosterColors(0)
+    }
+
+  }, [nowPlaying])
+
 
   if(isLoading) {
     return (
@@ -42,6 +49,8 @@ export const HomeScreen = ({ navigation}:Props) => {
       </View>
     )
   }
+ 
+  
   
   return (
     <GradientBackground>
