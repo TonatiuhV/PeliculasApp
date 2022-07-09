@@ -11,6 +11,7 @@ import { MoviePoster } from '../components/MoviePoster';
 import { useMovies } from '../hooks/useMovies';
 import { HorizontalSlider } from '../components/HorizontalSlider';
 import { GradientBackground } from '../components/GradientBackground';
+import { getImageColors } from '../helpers/getColores';
 
 
 interface Props extends StackScreenProps<any,any> {}
@@ -26,13 +27,8 @@ export const HomeScreen = ({ navigation}:Props) => {
   const getPosterColors = async (index:number) => {
     const movie =  nowPlaying[index];
     const uri =`https://image.tmdb.org/t/p/w500${movie.poster_path}`
-    const colors = await ImageColors.getColors(uri, {
-      fallback: '#228B22',
-      cache: true,
-      key: movie.id.toString(),
-    })
-    console.log(colors);
-    
+    const {primary, secoundary} = await getImageColors(uri, movie.id.toString())
+    console.log(primary,secoundary);
   }
 
 
