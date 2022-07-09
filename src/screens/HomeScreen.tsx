@@ -3,6 +3,7 @@ import { StackScreenProps } from '@react-navigation/stack';
 import { ActivityIndicator, Dimensions, ScrollView, StatusBar, View } from 'react-native'
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
+import ImageColors from 'react-native-image-colors'
 
 import Carousel from 'react-native-snap-carousel-v4';
 
@@ -22,7 +23,17 @@ export const HomeScreen = ({ navigation}:Props) => {
   const {nowPlaying, popular, topRated, upcoming, isLoading} = useMovies();
   const {top}= useSafeAreaInsets();
   const carousel = useRef(null)
-
+  const getPosterColors = async (index:number) => {
+    const movie =  nowPlaying[index];
+    const uri =`https://image.tmdb.org/t/p/w500${movie.poster_path}`
+    const colors = await ImageColors.getColors(uri, {
+      fallback: '#228B22',
+      cache: true,
+      key: movie.id.toString(),
+    })
+    console.log(colors);
+    
+  }
 
 
   if(isLoading) {
@@ -55,6 +66,7 @@ export const HomeScreen = ({ navigation}:Props) => {
                     }}
                     vertical={false}
                     inactiveSlideOpacity={0.9}
+                    onSnapToItem={ index => getPosterColors(index)}
                     />
           </View>
 
