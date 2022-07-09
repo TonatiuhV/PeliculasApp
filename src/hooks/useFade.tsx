@@ -11,10 +11,10 @@ export const useFade = () => {
     }).start(() => (callback ? callback() : null)); // pude resivir un collback
   };
 
-  const fadeOut = () => {
+  const fadeOut = (duration: number = 300) => {
     Animated.timing(opacity, {
       toValue: 0,
-      duration: 250,
+      duration,
       useNativeDriver: true,
     }).start(); // pude recibir un collback
   };

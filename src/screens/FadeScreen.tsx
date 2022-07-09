@@ -1,9 +1,9 @@
 import React, {useRef} from 'react';
 import {Animated, Button, View} from 'react-native';
-import { useFade } from '../hooks/useFade';
+import {useFade} from '../hooks/useFade';
 
 export const FadeScreen = () => {
-  const {fadeIn, fadeOut, opacity} = useFade()
+  const {fadeIn, fadeOut, opacity} = useFade();
 
   return (
     <View
@@ -29,8 +29,8 @@ export const FadeScreen = () => {
           margin: 10,
           justifyContent: 'space-between',
         }}>
-        <Button title="On FadeIn" onPress={fadeIn} />
-        <Button title="On FadeOut" onPress={fadeOut} />
+        <Button title="On FadeIn" onPress={() => fadeIn()} />
+        <Button title="On FadeOut" onPress={() => fadeOut()} />
       </View>
     </View>
   );

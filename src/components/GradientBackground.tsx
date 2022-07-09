@@ -12,10 +12,12 @@ export const GradientBackground = ({children}: Props) => {
   const {colors, prevColors, setPrevMainColors} = useContext(GradientContext);
   const {opacity, fadeIn, fadeOut} = useFade();
   useEffect(() => {
-    fadeIn(() => {
-      setPrevMainColors(colors);
-      fadeOut();
-    });
+    if (colors.primary != 'transparent') {
+      fadeIn(() => {
+        setPrevMainColors(colors);
+        fadeOut(50);
+      });
+    }
   }, [colors]);
 
   return (
